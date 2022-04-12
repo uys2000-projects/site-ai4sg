@@ -1,5 +1,4 @@
 <template>
-  <device-notification />
   <div class="perspective effect-rotate-left">
     <div class="container">
       <div class="outer-nav--return"></div>
@@ -16,13 +15,12 @@
 </template>
 
 <script>
-import deviceNotification from "@/components/deviceNotification.vue";
 import pagesLayout from "@/layouts/pagesLayout.vue";
 import headerBar from "@/components/headerBar.vue";
 import sideNav from "@/components/sideNav.vue";
 import popupNav from "@/components/popupNav.vue";
 export default {
-  components: { deviceNotification, headerBar, sideNav, pagesLayout, popupNav },
+  components: { headerBar, sideNav, pagesLayout, popupNav },
   mounted() {
     import("../../public/assets/js/functions-min");
   },
