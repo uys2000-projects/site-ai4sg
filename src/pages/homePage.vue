@@ -8,4 +8,7 @@
 .logo{
   animation: breath linear 4s infinite;
 }
+img{
+  max-width: 100vw;
+}
 </style>
