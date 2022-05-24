@@ -12,6 +12,7 @@
     </div>
     <popup-nav />
   </div>
+  <device-notification />
 </template>
 
 <script>
@@ -19,9 +20,13 @@ import pagesLayout from "@/layouts/pagesLayout.vue";
 import headerBar from "@/components/headerBar.vue";
 import sideNav from "@/components/sideNav.vue";
 import popupNav from "@/components/popupNav.vue";
+import deviceNotification from "@/components/deviceNotification.vue";
 export default {
-  components: { headerBar, sideNav, pagesLayout, popupNav },
+  components: { headerBar, sideNav, pagesLayout, popupNav, deviceNotification },
+  props: ["refresh"],
   mounted() {
+    console.log(this.$route.params.refresh)
+    if (this.$route.params.refresh) location.reload()
     import("../../public/assets/js/functions-min");
   },
 };

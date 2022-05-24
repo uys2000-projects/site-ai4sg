@@ -6,6 +6,9 @@
     <li class="l-section section">
       <events-page />
     </li>
+     <li class="l-section section">
+      <blogs-page />
+    </li>
     <li class="l-section section">
       <about-page />
     </li>
@@ -17,6 +20,7 @@
 <script>
 import homePage from "@/pages/homePage.vue";
 import eventsPage from "@/pages/eventsPage.vue";
+import blogsPage from "@/pages/blogsPage.vue";
 import aboutPage from "@/pages/aboutPage.vue";
 import contactPage from "@/pages/contactPage.vue";
 export default {
@@ -24,6 +28,7 @@ export default {
     homePage,
     eventsPage,
     aboutPage,
+    blogsPage,
     contactPage,
   },
 };

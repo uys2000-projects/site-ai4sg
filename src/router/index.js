@@ -1,12 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-
-const routes = [
-  {
-    path: "/",
-    name: "MainLayout",
-    component: () => import("@/layouts/mainLayout.vue"),
-  },
-];
+import routes from "./routes.js";
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
