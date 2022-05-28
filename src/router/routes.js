@@ -12,8 +12,13 @@ export default [
   },
   {
     path: "/updateBlogs",
-    name: "Update",
+    name: "UpdateBlogs",
     component: () => import("@/update/updateBlogs.vue"),
+  },
+  {
+    path: "/updateMedias",
+    name: "UpdateMedia",
+    component: () => import("@/update/updateMedias.vue"),
   },
   {
     path: "/:pathMatch(.*)*",

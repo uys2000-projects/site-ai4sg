@@ -63,12 +63,18 @@
 </template>
 
 <script>
+import { getPostsDB, getPostsB, getPostsN } from "@/services/getBlogs.js";
 export default {
   data() {
     return {
       card: {
         width: 300,
         height: 200,
+      },
+      nav: {
+        item: null,
+        last: 0,
+        now: 0,
       },
       item: {},
       coursel: {
@@ -83,20 +89,25 @@ export default {
     };
   },
   methods: {
-    l: function (item) {
-      console.log("logger", item);
-    },
-    getPosts: function (start, lenght) {
-      console.log(start, lenght);
-
-      const url = "/dami";
-      fetch(url, {}).then((res) => {
-        res.json().then((re) => {
-          console.log(re);
-          console.log(re.splice(start, lenght));
-          this.items = re.splice(start, lenght);
-        });
+    getPosts: function (lenght) {
+      getPostsDB(lenght).then((res) => {
+        this.items = res.docs.map((i) => i.data());
       });
+    },
+    getPostsN: function (start, lenght) {
+      getPostsN(start, lenght).then((res) => {
+        this.items = res.docs.map((i) => i.data());
+      });
+    },
+    getPostsB: function (start, lenght) {
+      if (this.nav.now != 0)
+        getPostsB(start, lenght).then((res) => {
+          this.items = res.docs.map((i) => i.data());
+        });
+      else
+        getPostsB(start, this.nav.last).then((res) => {
+          this.items = res.docs.map((i) => i.data());
+        });
     },
     setPaginationDefault: function () {
       this.coursel.col = Math.floor(
@@ -109,26 +120,26 @@ export default {
       if (this.coursel.col == 0) this.coursel.col = 1;
       if (this.coursel.row == 0) this.coursel.row = 1;
       this.coursel.items = this.coursel.col * this.coursel.row;
-
-      console.log(this.coursel.items, this.coursel.col, this.coursel.row);
     },
-    setPagination: function () {},
     openPost: function (item) {
-      console.log(item);
       this.item = item;
       this.dialog = true;
-      console.log(this.item);
     },
   },
   mounted() {
     this.setPaginationDefault();
-    this.getPosts(this.coursel.items * this.page, this.coursel.items);
-    this.setPagination();
+    this.getPosts(this.coursel.items);
   },
   watch: {
-    page() {
+    page(nValue, oValue) {
+      this.nav.last = this.nav.now;
+      this.nav.now = this.items.length;
+      if (this.items[0]) this.nav.item = this.items[this.items.length - 1];
       this.items = [];
-      this.getPosts(this.coursel.items * this.page, this.coursel.items);
+      if (nValue < oValue) this.getPostsB(this.nav.item, this.coursel.items);
+      else this.getPostsN(this.nav.item, this.coursel.items);
+      console.log(this.nav.item.title)
+      console.log(this.nav)
     },
   },
 };

@@ -1,12 +1,16 @@
 <template>
-  <div>asd</div>
+  <div>Updated...</div>
 </template>
 
 <script>
-import { get_posts } from "@/services/getBlogs.js";
+import { getPostsMedium, updatePosts } from "@/services/getBlogs.js";
 export default {
   mounted() {
-    get_posts();
+    getPostsMedium().then((res) => {
+      res.forEach((element) => {
+        updatePosts(element);
+      });
+    });
   },
 };
 </script>
@@ -14,5 +18,11 @@ export default {
 <style scoped>
 * {
   color: white;
+}
+div {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

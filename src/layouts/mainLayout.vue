@@ -25,7 +25,6 @@ export default {
   components: { headerBar, sideNav, pagesLayout, popupNav, deviceNotification },
   props: ["refresh"],
   mounted() {
-    console.log(this.$route.params.refresh)
     if (this.$route.params.refresh) location.reload()
     import("../../public/assets/js/functions-min");
   },
