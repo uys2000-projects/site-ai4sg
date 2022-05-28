@@ -4,11 +4,10 @@
       <img :src="require('@/assets/logo.png')" alt="AI4SG" />
     </a>
     <p class="device-notification--message">
-      AI4SG has so much to offer that we must request you orient your device to
-      portrait or find a larger screen. You won't be disappointed.
+      Wow Woow Wooow Cihazının Boyutları Pek de Uygun Sayılmaz Web Sitemiz İçin Amma İstersen Hala Devam Edebilirsin 
     </p>
 
-    <q-btn @click="show = false" label="Contiune" />
+    <q-btn @click="show = false" label="Devam" />
   </div>
 </template>
 

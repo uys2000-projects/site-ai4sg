@@ -22,7 +22,7 @@ export default {
     };
   },
   mounted() {
-    const pages = this.getPages.value;
+    const pages = [...this.getPages];
     this.f = pages[0];
     this.menu = pages.splice(1, pages.length - 1);
   },
