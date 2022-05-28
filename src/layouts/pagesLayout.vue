@@ -4,13 +4,13 @@
       <home-page />
     </li>
     <li class="l-section section">
-      <events-page />
-    </li>
-     <li class="l-section section">
-      <blogs-page />
+      <about-page />
     </li>
     <li class="l-section section">
-      <about-page />
+      <events-page />
+    </li>
+    <li class="l-section section">
+      <blogs-page />
     </li>
     <li class="l-section section">
       <contact-page />

@@ -1,39 +1,45 @@
 <template>
   <div class="page">
     <q-carousel
-      v-model="page"
+      v-model="page.num"
       transition-prev="slide-right"
       transition-next="slide-left"
       animated
       control-color="secondary"
       arrows
+      @before-transition="pageUpdate"
       class="rounded-borders coursel bg-primary"
     >
       <q-carousel-slide
-        v-for="i in items.length != 0
-          ? [...Array(page + 2).keys()]
-          : [...Array(page + 1).keys()]"
+        v-for="i in page.itemsShow.length != 0
+          ? [...Array(page.num + 2).keys()]
+          : [...Array(page.num + 1).keys()]"
         :key="i"
         :name="i"
         class="row wrap flex-center justify-around"
       >
         <q-card
           class="bg-primary"
-          :style="`width: ${card.width}px; height: ${card.height}px; `"
-          v-for="item in items"
+          :style="`width: ${card.w}px; height: ${card.h}px; `"
+          v-for="item in page.itemsShow"
           :key="item"
           @click="openPost(item)"
         >
-          <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
-            <div class="absolute-bottom text-h6">{{ item.title }}</div>
+          <q-img
+            :src="require('@/assets/logo.jpeg')"
+            :style="`width: ${card.w}px; height: ${card.h}px; `"
+          >
+            <div class="absolute-bottom text-subtitle1 text-left">
+              {{ item.title }}
+            </div>
           </q-img>
         </q-card>
-        <p v-if="items.length == 0">No more Content</p>
+        <p v-if="page.itemsShow.length == 0">No more Content</p>
       </q-carousel-slide>
     </q-carousel>
 
     <q-dialog
-      v-model="dialog"
+      v-model="dialog.show"
       persistent
       :maximized="true"
       transition-show="slide-up"
@@ -41,21 +47,24 @@
     >
       <q-card class="bg-primary text-white">
         <q-bar class="fixed-top" style="z-index: 10000">
-          <p class="text-white p">{{ item.pubDate }}</p>
+          <p class="text-white p">{{ dialog.item.pubDate }}</p>
           <q-space />
           <q-btn dense flat icon="close" v-close-popup>
             <q-tooltip class="bg-white text-primary">Close</q-tooltip>
           </q-btn>
         </q-bar>
         <q-card-section>
-          <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
+          <q-img
+            :src="require('@/assets/dişi_yatay_uzun.png')"
+            style="width: 100%"
+          >
             <div class="absolute-bottom text-subtitle2 text-center">
-              {{ item.title }}
+              {{ dialog.item.title }}
             </div>
           </q-img>
         </q-card-section>
-
-        <q-card-section class="q-pt-none" v-html="item.content">
+        <q-card-section>
+          <div v-html="dialog.item.content" style="max-width: 100%"></div>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -63,84 +72,89 @@
 </template>
 
 <script>
-import { getPostsDB, getPostsB, getPostsN } from "@/services/getBlogs.js";
+import { getPost, getPosts } from "@/services/getBlogs";
+getPost, getPosts;
 export default {
   data() {
     return {
+      pageType: "posts",
       card: {
-        width: 300,
-        height: 200,
+        w: 300,
+        h: 200,
       },
-      nav: {
-        item: null,
-        last: 0,
-        now: 0,
+      dialog: {
+        show: false,
+        item: {},
       },
-      item: {},
-      coursel: {
-        col: 0,
-        row: 0,
-        items: 0,
+      page: {
+        num: 0,
+        maxItem: 0,
+        navItem: {},
+        itemsAll: [],
+        itemsShow: [],
+        stop: false,
       },
-      items: [],
-      page: 0,
-      dialog: false,
-      end: false,
     };
   },
   methods: {
-    getPosts: function (lenght) {
-      getPostsDB(lenght).then((res) => {
-        this.items = res.docs.map((i) => i.data());
-      });
-    },
-    getPostsN: function (start, lenght) {
-      getPostsN(start, lenght).then((res) => {
-        this.items = res.docs.map((i) => i.data());
-      });
-    },
-    getPostsB: function (start, lenght) {
-      if (this.nav.now != 0)
-        getPostsB(start, lenght).then((res) => {
-          this.items = res.docs.map((i) => i.data());
-        });
-      else
-        getPostsB(start, this.nav.last).then((res) => {
-          this.items = res.docs.map((i) => i.data());
-        });
-    },
     setPaginationDefault: function () {
-      this.coursel.col = Math.floor(
-        ((window.innerWidth / 10) * 7) / this.card.width
-      );
-      this.coursel.row = Math.floor(
-        ((window.innerHeight / 10) * 7) / this.card.height
-      );
-
-      if (this.coursel.col == 0) this.coursel.col = 1;
-      if (this.coursel.row == 0) this.coursel.row = 1;
-      this.coursel.items = this.coursel.col * this.coursel.row;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      let col = Math.floor(((w / 10) * 7) / this.card.w);
+      let row = Math.floor(((h / 10) * 7) / this.card.h);
+      if (col == 0) col = 1;
+      if (row == 0) row = 1;
+      this.page.maxItem = col * row;
     },
     openPost: function (item) {
-      this.item = item;
-      this.dialog = true;
+      this.dialog.item = item;
+      this.dialog.show = true;
+    },
+    getPostsF: function () {
+      getPost(this.pageType).then((res) => {
+        console.log(res.docs);
+        this.page.navItem = res.docs[0].data();
+        this.getPosts(true);
+      });
+    },
+    getPostCheck: function () {
+      const c = this.page.itemsAll.length / this.page.maxItem;
+      const p = this.page.num + 1;
+      return p > c;
+    },
+    getPosts: function (fTime) {
+      if (this.getPostCheck() && !this.page.stop)
+        getPosts(
+          this.pageType,
+          this.page.navItem,
+          this.page.maxItem,
+          fTime
+        ).then((res) => {
+          const items = res.docs.map((res) => res.data());
+          this.page.navItem = items[items.length - 1];
+          this.page.itemsAll = this.page.itemsAll.concat(items);
+          this.setItemsShow();
+        });
+      else this.setItemsShow();
+    },
+    setItemsShow: function () {
+      this.page.itemsShow = [];
+      const f = this.page.num * this.page.maxItem;
+      const l = (this.page.num + 1) * this.page.maxItem;
+      const items = [...this.page.itemsAll];
+      this.page.itemsShow = items.slice(f, l);
+      if (this.page.itemsShow.length == 0) this.page.stop = true;
+    },
+    pageUpdate: function () {
+      this.getPosts();
     },
   },
   mounted() {
     this.setPaginationDefault();
-    this.getPosts(this.coursel.items);
+    this.getPostsF();
   },
   watch: {
-    page(nValue, oValue) {
-      this.nav.last = this.nav.now;
-      this.nav.now = this.items.length;
-      if (this.items[0]) this.nav.item = this.items[this.items.length - 1];
-      this.items = [];
-      if (nValue < oValue) this.getPostsB(this.nav.item, this.coursel.items);
-      else this.getPostsN(this.nav.item, this.coursel.items);
-      console.log(this.nav.item.title)
-      console.log(this.nav)
-    },
+    page() {},
   },
 };
 </script>

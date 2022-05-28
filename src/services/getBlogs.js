@@ -5,6 +5,7 @@ import {
   getFirestore,
   orderBy,
   setDoc,
+  startAt,
 } from "firebase/firestore";
 import { doc, startAfter, limit, query } from "firebase/firestore";
 const firebaseConfig = {
@@ -87,4 +88,18 @@ export const updateMedias = function (data) {
   data["timeStamp"] = getTime2(data.timestamp);
   const mediaRef = doc(db, "medias", `${data["timeStamp"]}`);
   return setDoc(mediaRef, data);
+};
+
+export const getPost = function (dName) {
+  const q = query(collection(db, dName), orderBy("timeStamp"), limit(1));
+  return getDocs(q);
+};
+export const getPosts = function (dName, startItem, lenght, f = false) {
+  const q = query(
+    collection(db, dName),
+    orderBy("timeStamp"),
+    f ? startAt(startItem.timeStamp) : startAfter(startItem.timeStamp),
+    limit(lenght)
+  );
+  return getDocs(q);
 };
