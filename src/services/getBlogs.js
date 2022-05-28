@@ -91,13 +91,17 @@ export const updateMedias = function (data) {
 };
 
 export const getPost = function (dName) {
-  const q = query(collection(db, dName), orderBy("timeStamp"), limit(1));
+  const q = query(
+    collection(db, dName),
+    orderBy("timeStamp", "desc"),
+    limit(1)
+  );
   return getDocs(q);
 };
 export const getPosts = function (dName, startItem, lenght, f = false) {
   const q = query(
     collection(db, dName),
-    orderBy("timeStamp"),
+    orderBy("timeStamp", "desc"),
     f ? startAt(startItem.timeStamp) : startAfter(startItem.timeStamp),
     limit(lenght)
   );

@@ -25,3 +25,10 @@
 a {
   color: wheat;
 }
+* {
+  transition: 0.5s;
+}
+.slowDowns {
+  transition-duration: 1s;
+  animation-duration: 1s;
+}

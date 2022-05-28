@@ -20,7 +20,7 @@
       >
         <q-card
           class="bg-primary"
-          :style="`width: ${card.w}px; height: ${card.h}px; `"
+          :style="`width: ${card.w}px; height: ${card.h}px;`"
           v-for="item in page.itemsShow"
           :key="item"
           @click="openPost(item)"
@@ -37,25 +37,31 @@
 
     <q-dialog
       v-model="dialog.show"
-      persistent
-      :maximized="true"
       transition-show="slide-up"
       transition-hide="slide-down"
     >
-      <q-card class="bg-primary text-white">
-        <q-bar class="fixed-top" style="z-index: 10000">
-          <p class="text-white p">{{ dialog.item.timestamp }}</p>
+      <q-card
+        class="bg-primary"
+        :style="`width: 1000000px; max-width: ${width}vw`"
+      >
+        <q-bar
+          class="fixed"
+          style="z-index: 10000"
+          :style="`width: 1000000px; max-width: calc(${width}vw - 48px)`"
+        >
+          <p class="text-white p">{{ getTime(dialog.item.timestamp) }}</p>
           <q-space />
           <q-btn dense flat icon="close" v-close-popup>
             <q-tooltip class="bg-white text-primary">Close</q-tooltip>
           </q-btn>
         </q-bar>
         <q-card-section>
-          <q-img :src="dialog.item.media_url" style="height: 95vh">
-            <div class="absolute-bottom text-subtitle2 text-center">
-              {{ dialog.item.caption }}
-            </div>
-          </q-img>
+          <q-img :src="dialog.item.media_url" style="height: 95vh"> </q-img>
+        </q-card-section>
+        <q-card-section>
+          <div class="ext-subtitle2 hide">
+            {{ dialog.item.caption }}
+          </div>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -85,17 +91,26 @@ export default {
         itemsShow: [],
         stop: false,
       },
+      width: "",
     };
   },
   methods: {
+    getTime: function (t) {
+      const [date, time] = t.split("T");
+      const [year, month, day] = date.split("-");
+      const time2 = time.split("+")[0];
+      const [hours, minutes, seconds] = time2.split(":");
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    },
     setPaginationDefault: function () {
       const w = window.innerWidth;
       const h = window.innerHeight;
-      let col = Math.floor(((w / 10) * 7) / this.card.w);
-      let row = Math.floor(((h / 10) * 7) / this.card.h);
+      let col = Math.floor(((w / 10) * 6.5) / this.card.w);
+      let row = Math.floor(((h / 10) * 6.5) / this.card.h);
       if (col == 0) col = 1;
       if (row == 0) row = 1;
       this.page.maxItem = col * row;
+      this.width = w < 500 ? 100 : w < 800 ? 60 : 50;
     },
     openPost: function (item) {
       this.dialog.item = item;
@@ -160,5 +175,8 @@ export default {
 }
 .my-card {
   width: 100%;
+}
+.hide {
+  overflow: hidden;
 }
 </style>

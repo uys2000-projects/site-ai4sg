@@ -37,34 +37,35 @@
         <p v-if="page.itemsShow.length == 0">No more Content</p>
       </q-carousel-slide>
     </q-carousel>
-
-    <q-dialog
-      v-model="dialog.show"
-      persistent
-      :maximized="true"
-      transition-show="slide-up"
-      transition-hide="slide-down"
-    >
-      <q-card class="bg-primary text-white">
-        <q-bar class="fixed-top" style="z-index: 10000">
+    <q-dialog v-model="dialog.show" position="right">
+      <q-card
+        class="bg-primary"
+        :style="`width: 1000000px; max-width: ${width}vw`"
+      >
+        <q-bar
+          class="fixed"
+          style="z-index: 10000"
+          :style="`width: 1000000px; max-width: ${width}vw`"
+        >
           <p class="text-white p">{{ dialog.item.pubDate }}</p>
           <q-space />
           <q-btn dense flat icon="close" v-close-popup>
-            <q-tooltip class="bg-white text-primary">Close</q-tooltip>
+            <q-tooltip class="bg-white text-primary">Kapat</q-tooltip>
           </q-btn>
         </q-bar>
+
         <q-card-section>
           <q-img
             :src="require('@/assets/dişi_yatay_uzun.png')"
             style="width: 100%"
           >
-            <div class="absolute-bottom text-subtitle2 text-center">
+            <div class="absolute-bottom text-subtitle2 text-left">
               {{ dialog.item.title }}
             </div>
           </q-img>
         </q-card-section>
-        <q-card-section>
-          <div v-html="dialog.item.content" style="max-width: 100%"></div>
+
+        <q-card-section class="q-pt-none hide" v-html="dialog.item.content">
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -94,6 +95,7 @@ export default {
         itemsShow: [],
         stop: false,
       },
+      width: "",
     };
   },
   methods: {
@@ -105,6 +107,7 @@ export default {
       if (col == 0) col = 1;
       if (row == 0) row = 1;
       this.page.maxItem = col * row;
+      this.width = w < 700 ? 100 : w < 1250 ? 75 : 60;
     },
     openPost: function (item) {
       this.dialog.item = item;
