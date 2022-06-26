@@ -23,10 +23,9 @@ import popupNav from "@/components/popupNav.vue";
 import deviceNotification from "@/components/deviceNotification.vue";
 export default {
   components: { headerBar, sideNav, pagesLayout, popupNav, deviceNotification },
-  props: ["refresh"],
   mounted() {
-    if (this.$route.params.refresh) location.reload()
-    import("../../public/assets/js/functions-min");
+    import("@/assets/js/functions-min");
+    import("@/assets/css/main.css");
   },
 };
 </script>

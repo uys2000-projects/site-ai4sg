@@ -19,12 +19,7 @@
           icon="description"
           :text="page?.name"
           :text2="page?.type"
-          :goTo="
-            () =>
-              $router.push(
-                `/ap/pageEdit/${page?.type}/${page?.name}/${page?.id}`
-              )
-          "
+          :goTo="() => $router.push(`/ap/pageEdit/${page?.type}/${page?.name}`)"
         />
       </q-list>
     </q-expansion-item>
@@ -63,8 +58,7 @@ export default {
   },
   mounted() {
     getPages().then((res) => {
-      const a = res.docs.map((i) => i.data());
-      this.setPages(a);
+      if (res.exists()) this.setPages(res.data().pages);
     });
   },
 };

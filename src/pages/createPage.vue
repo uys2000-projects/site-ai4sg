@@ -2,7 +2,10 @@
   <div class="p ss">
     <page-create :pages="pages" />
   </div>
+  <div class="p ss">
+
   <router-view :pages="pages" />
+  </div>
 </template>
 
 <script>

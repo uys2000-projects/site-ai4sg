@@ -5,36 +5,102 @@
     </div>
     <router-view :pages="pages" />
   </div>
-  {{ pages }}
+  <div>
+    <logger-tab :items="[pages, ...innerPages, pageIndexes]" />
+  </div>
+  <div>{{ innerPages }}</div>
 </template>
 
 <script>
 import pagesNav from "@/components/apPagesNav.vue";
+import loggerTab from "@/components/loggerTab.vue";
+import {
+  createInnerPage,
+  createPage,
+  removeInnerPage,
+  removePage,
+} from "@/services/service-fb";
+import { computed } from "@vue/runtime-core";
 
 export default {
   components: {
     pagesNav,
+    loggerTab,
   },
   data() {
     return {
       pages: [],
+      innerPages: [],
+      pageIndexes: [],
     };
   },
   methods: {
+    addPage: function (page) {
+      const pageItem = { name: page, type: "OneText" };
+      return createPage(pageItem).then((res) => {
+        this.pages.push(res);
+        this.$router.push(`/ap/pageCreate/${page}`);
+      });
+    },
+    removePage: function (page) {
+      let pages = [...this.pages];
+      const p = pages.filter((i) => i.name == page);
+      return removePage(p[0]).then(() => {
+        this.pages = this.pages.filter((i) => i.name != page);
+        this.$router.push("/ap/pageCreate");
+      });
+    },
     updatePages: function (page) {
       if (page != "")
         if (this.pages.find((i) => i.name == page))
-          this.pages = this.pages.filter((i) => i.name != page);
-        else {
-          this.pages.push({ name: page, type: "OneText" });
-          this.$router.push(`/ap/pageCreate/${page}`);
-        }
+          return this.removePage(page);
+        else return this.addPage(page);
+      else return new Promise((resolve) => resolve(false));
+    },
+    addManyPageCheck: function (id) {
+      return this.pageIndexes.find((i) => i.id == id);
+    },
+    setManyPages: function (id, pages) {
+      if (!this.addManyPageCheck(id)) {
+        this.pageIndexes.push({ id: id, index: this.innerPages.length });
+        this.innerPages[this.innerPages.length] = pages;
+      }
+    },
+    addManyPage: function (id, pName, pages) {
+      const pageItem = { name: pName, text: "" };
+      return createInnerPage(id, pageItem).then((res) => {
+        pages.push(res);
+        const a = `/ap/pageEdit/ManyText/${this.$route.params.name}/${id}/ip/${res.id}`;
+        this.$router.push(a);
+      });
+    },
+    removeManyPage: function (pName, pages) {
+      const p = [...pages].filter((i) => i.name == pName);
+      return removeInnerPage(p[0]).then(() => {
+        pages = pages.filter((i) => i.name != pName);
+        this.$router.push("/ap/pageCreate");
+      });
+    },
+    updateManyPages: function (id, page) {
+      const i = this.addManyPageCheck(id);
+      if (i) {
+        const pages = this.innerPages[i.index];
+        if (page != "")
+          if (pages.find((it) => it.name == page))
+            return this.removeManyPage(page, pages);
+          else return this.addManyPage(i.id, page, pages);
+        else return new Promise((resolve) => resolve(false));
+      }
     },
   },
   provide() {
     return {
       setPages: (pages) => (this.pages = pages),
+      setManyPages: this.setManyPages,
       updatePages: this.updatePages,
+      getInnerPages: computed(() => [this.innerPages, this.pageIndexes]),
+      addManyPage: this.addManyPage,
+      updateManyPages: this.updateManyPages,
     };
   },
   mounted() {},
@@ -42,8 +108,8 @@ export default {
 </script>
 <style scoped>
 .a {
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 </style>
 <style>
@@ -51,12 +117,14 @@ export default {
   color: white;
 }
 .p {
-  background-color: gray;
+  border-radius: 5px;
+  background-color: #333;
   height: 90vh;
   max-height: fit-content;
   width: 90%;
   margin: auto;
-  overflow: scroll;
+  margin-top: 5vh;
+  overflow: auto;
 }
 .b {
   max-width: 300px;

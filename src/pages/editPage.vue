@@ -1,16 +1,10 @@
 <template>
-  <div class="p ss">
-    <page-edit :pages="pages" />
-  </div>
+  <router-view :pages="pages" />
 </template>
 
 <script>
-import pageEdit from "../components/pageEditComp.vue";
 export default {
   props: ["pages"],
-  components: {
-    pageEdit,
-  },
 };
 </script>
 

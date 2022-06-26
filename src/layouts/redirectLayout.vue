@@ -2,7 +2,9 @@
 <script>
 export default {
   mounted() {
-    this.$router.push({ name: 'IndexRefreshed', params: { refresh: true } })
+    const a = this.$route.path.split("/").find((i) => i == "ap");
+    if (a == "ap") this.$router.push("/ap");
+    else this.$router.push({ name: "Index" });
   },
 };
 </script>

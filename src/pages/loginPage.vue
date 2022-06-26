@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { sign } from "@/services/login-service";
+import { auth, sign } from "@/services/login-service";
 export default {
   data() {
     return {
@@ -16,26 +16,29 @@ export default {
     };
   },
   methods: {
+    signEvent: function () {
+      console.log(auth.currentUser);
+      import("@/router/admin-route").then((res) => {
+        this.$router.removeRoute("Error");
+        this.$router.removeRoute("adminLogin");
+        this.$router.addRoute(res.default);
+        this.$router.push("/ap");
+      });
+    },
     login: function () {
       sign(this.mail, this.pass)
-        .then((user) => {
-          console.log(user);
-          import("@/router/admin-route").then((res) => {
-            this.$router.removeRoute("Error");
-            this.$router.removeRoute("adminLogin");
-            this.$router.addRoute(res.default);
-            this.$router.push("/ap");
-            this.$router.addRoute({
-              path: "/:pathMatch(.*)*",
-              name: "Error",
-              component: () => import("@/layouts/redirectLayout.vue"),
-            });
-          });
+        .then((res) => {
+          if (res) this.signEvent();
         })
         .catch((err) => {
           console.log(err);
         });
     },
+  },
+  mounted() {
+    console.log(auth.currentUser);
+    import("@/assets/css/main.css");
+    if (auth.currentUser) this.signEvent();
   },
 };
 </script>

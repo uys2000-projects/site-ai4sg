@@ -13,6 +13,7 @@
         :text="page?.name"
         :text2="page?.type"
         :goTo="() => $router.push(`/ap/pageCreate/${page?.name}`)"
+        @click="name = page.name"
       />
     </q-list>
   </q-expansion-item>
@@ -20,6 +21,7 @@
   <q-btn
     class="full-width bg-primary text-white"
     label="Create / Delete Page"
+    :disable="btn"
     @click="clickEvent"
   />
 </template>
@@ -34,12 +36,14 @@ export default {
   },
   data() {
     return {
+      btn: false,
       name: "",
     };
   },
   methods: {
     clickEvent: function () {
-      this.updatePages(this.name);
+      this.btn = true;
+      this.updatePages(this.name).then(() => (this.btn = false));
     },
   },
 };

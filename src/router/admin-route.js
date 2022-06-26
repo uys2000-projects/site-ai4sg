@@ -14,9 +14,16 @@ export default {
       component: () => import("@/pages/editPage.vue"),
       children: [
         {
-          path: ":type/:id",
+          path: ":type/:name/:id",
           name: "editPage",
-          component: () => import("@/pages/editPage.vue"),
+          component: () => import("@/pages/editorPage.vue"),
+          children: [
+            {
+              path: "ip/:iid",
+              name: "editPage",
+              component: () => import("@/pages/editorPage.vue"),
+            },
+          ],
         },
       ],
     },
@@ -26,9 +33,9 @@ export default {
       component: () => import("@/pages/createPage.vue"),
       children: [
         {
-          path: ":id",
+          path: ":name",
           name: "pageEdit",
-          component: () => import("@/components/pageEditComp.vue"),
+          component: () => import("@/components/pageEditCompC.vue"),
         },
       ],
     },
@@ -36,6 +43,11 @@ export default {
       path: "settings",
       name: "settings",
       component: () => import("@/pages/apIndexPage.vue"),
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "Error",
+      component: () => import("@/layouts/redirectLayout.vue"),
     },
   ],
 };
