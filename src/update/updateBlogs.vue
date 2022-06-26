@@ -1,14 +1,21 @@
 <template>
-  <div>Updated...</div>
+  <div>{{text}}</div>
 </template>
 
 <script>
 import { getPostsMedium, updatePosts } from "@/services/getBlogs.js";
 export default {
+  data(){
+    return{
+      text: "Updating..."
+    }
+  },
   mounted() {
     getPostsMedium().then((res) => {
       res.forEach((element) => {
-        updatePosts(element);
+        updatePosts(element).then(()=>{
+          this.text = "Updated :)"
+        })
       });
     });
   },

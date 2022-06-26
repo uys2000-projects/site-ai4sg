@@ -1,6 +1,7 @@
 const { defineConfig } = require("@vue/cli-service");
-module.exports = defineConfig({
+const PreloadWebpackPlugin = require("@vue/preload-webpack-plugin");
 
+module.exports = defineConfig({
   pluginOptions: {
     quasar: {
       importStrategy: "kebab",
@@ -8,4 +9,12 @@ module.exports = defineConfig({
     },
   },
   transpileDependencies: ["quasar"],
+  configureWebpack: {
+    plugins: [
+      new PreloadWebpackPlugin({
+        rel: "preload",
+        as: "script",
+      }),
+    ],
+  },
 });

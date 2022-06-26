@@ -59,7 +59,7 @@
             :src="require('@/assets/dişi_yatay_uzun.png')"
             style="width: 100%"
           >
-            <div class="absolute-bottom text-subtitle2 text-left">
+            <div class="absolute-bottom text-subtitle2 text-left back">
               {{ dialog.item.title }}
             </div>
           </q-img>
@@ -106,6 +106,7 @@ export default {
       let row = Math.floor(((h / 10) * 7) / this.card.h);
       if (col == 0) col = 1;
       if (row == 0) row = 1;
+      if (w < 500) this.card.w = 200;
       this.page.maxItem = col * row;
       this.width = w < 700 ? 100 : w < 1250 ? 75 : 60;
     },
@@ -115,7 +116,6 @@ export default {
     },
     getPostsF: function () {
       getPost(this.pageType).then((res) => {
-        console.log(res.docs);
         this.page.navItem = res.docs[0].data();
         this.getPosts(true);
       });
@@ -173,5 +173,11 @@ export default {
 }
 .my-card {
   width: 100%;
+}
+</style>
+
+<style>
+.q-img__content > div {
+  background: rgba(0, 0, 0, 0.8);
 }
 </style>

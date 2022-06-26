@@ -47,7 +47,7 @@
         <q-bar
           class="fixed"
           style="z-index: 10000"
-          :style="`width: 1000000px; max-width: calc(${width}vw - 48px)`"
+          :style="`width: ${width}vw`"
         >
           <p class="text-white p">{{ getTime(dialog.item.timestamp) }}</p>
           <q-space />
@@ -56,7 +56,7 @@
           </q-btn>
         </q-bar>
         <q-card-section>
-          <q-img :src="dialog.item.media_url" style="height: 95vh"> </q-img>
+          <q-img :src="dialog.item.media_url" style="height: 50vh"> </q-img>
         </q-card-section>
         <q-card-section>
           <div class="ext-subtitle2 hide">
@@ -109,6 +109,7 @@ export default {
       let row = Math.floor(((h / 10) * 6.5) / this.card.h);
       if (col == 0) col = 1;
       if (row == 0) row = 1;
+      if (w < 500) this.card.w = 200;
       this.page.maxItem = col * row;
       this.width = w < 500 ? 100 : w < 800 ? 60 : 50;
     },

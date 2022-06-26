@@ -21,6 +21,11 @@ export default [
     component: () => import("@/update/updateMedias.vue"),
   },
   {
+    path: "/ap",
+    name: "adminLogin",
+    component: () => import("@/pages/loginPage.vue"),
+  },
+  {
     path: "/:pathMatch(.*)*",
     name: "Error",
     component: () => import("@/layouts/redirectLayout.vue"),
