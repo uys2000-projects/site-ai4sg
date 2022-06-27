@@ -33,7 +33,7 @@ export default {
       component: () => import("@/pages/createPage.vue"),
       children: [
         {
-          path: ":name",
+          path: ":name/:id",
           name: "pageEdit",
           component: () => import("@/components/pageEditCompC.vue"),
         },

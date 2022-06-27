@@ -1,14 +1,15 @@
 <template>
-  <div class="a row wrap">
-    <div class="p b">
-      <pages-nav :pages="pages" />
+  <template v-if="user">
+    <div class="a row wrap">
+      <div class="p b">
+        <pages-nav :pages="pages" />
+      </div>
+      <router-view :pages="pages" />
     </div>
-    <router-view :pages="pages" />
-  </div>
-  <div>
-    <logger-tab :items="[pages, ...innerPages, pageIndexes]" />
-  </div>
-  <div>{{ innerPages }}</div>
+    <div>
+      <logger-tab :items="[pages, pageIndexes, ...innerPages]" />
+    </div>
+  </template>
 </template>
 
 <script>
@@ -21,6 +22,7 @@ import {
   removePage,
 } from "@/services/service-fb";
 import { computed } from "@vue/runtime-core";
+import { auth, sign } from "@/services/login-service";
 
 export default {
   components: {
@@ -29,23 +31,32 @@ export default {
   },
   data() {
     return {
+      user: false,
       pages: [],
       innerPages: [],
       pageIndexes: [],
     };
   },
   methods: {
+    checkUser: function () {
+      this.user = false;
+      if (auth.currentUser != null) this.user = true;
+      else {
+        sign(localStorage.getItem("m"), localStorage.getItem("p")).then(
+          (this.user = true)
+        );
+      }
+    },
     addPage: function (page) {
       const pageItem = { name: page, type: "OneText" };
       return createPage(pageItem).then((res) => {
         this.pages.push(res);
-        this.$router.push(`/ap/pageCreate/${page}`);
+        this.$router.push(`/ap/pageCreate/${page}/${res.id}`);
       });
     },
     removePage: function (page) {
-      let pages = [...this.pages];
-      const p = pages.filter((i) => i.name == page);
-      return removePage(p[0]).then(() => {
+      const id = this.$route.params.id;
+      return removePage(id).then(() => {
         this.pages = this.pages.filter((i) => i.name != page);
         this.$router.push("/ap/pageCreate");
       });
@@ -74,11 +85,14 @@ export default {
         this.$router.push(a);
       });
     },
-    removeManyPage: function (pName, pages) {
-      const p = [...pages].filter((i) => i.name == pName);
-      return removeInnerPage(p[0]).then(() => {
-        pages = pages.filter((i) => i.name != pName);
-        this.$router.push("/ap/pageCreate");
+    removeManyPage: function (pages, i) {
+      const id = this.$route.params.id;
+      const iid = this.$route.params.iid;
+      return removeInnerPage(id, iid).then(() => {
+        pages = pages.filter((i) => i.id != iid);
+        this.innerPages[i] = pages;
+        const a = `/ap/pageEdit/ManyText/${this.$route.params.name}/${id}`;
+        this.$router.push(a);
       });
     },
     updateManyPages: function (id, page) {
@@ -87,15 +101,18 @@ export default {
         const pages = this.innerPages[i.index];
         if (page != "")
           if (pages.find((it) => it.name == page))
-            return this.removeManyPage(page, pages);
+            return this.removeManyPage(pages, i.index);
           else return this.addManyPage(i.id, page, pages);
         else return new Promise((resolve) => resolve(false));
       }
     },
+    setPages: function (pages) {
+      this.pages = pages;
+    },
   },
   provide() {
     return {
-      setPages: (pages) => (this.pages = pages),
+      setPages: this.setPages,
       setManyPages: this.setManyPages,
       updatePages: this.updatePages,
       getInnerPages: computed(() => [this.innerPages, this.pageIndexes]),
@@ -103,7 +120,9 @@ export default {
       updateManyPages: this.updateManyPages,
     };
   },
-  mounted() {},
+  mounted() {
+    this.checkUser();
+  },
 };
 </script>
 <style scoped>
@@ -115,6 +134,9 @@ export default {
 <style>
 * {
   color: white;
+}
+.ql-picker-item {
+  color: black !important;
 }
 .p {
   border-radius: 5px;

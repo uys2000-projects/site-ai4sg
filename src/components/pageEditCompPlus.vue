@@ -22,6 +22,7 @@
                 `/ap/pageEdit/ManyText/${$route.params.name}/${$route.params.id}/ip/${page?.id}`
               )
           "
+          @click="name = page?.name"
         />
       </q-list>
     </q-expansion-item>

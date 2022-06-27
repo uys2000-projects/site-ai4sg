@@ -59,12 +59,12 @@ export default {
     updateUrlType: function () {
       if (this.$route.params.type)
         if (this.$route.params.type != this.page?.type)
-          this.$router.push(`/ap/pageCreate//${this.page?.name}}`);
+          this.$router.push(`/ap/pageCreate/${this.page?.name}/${this.page?.id}`);
     },
     updateUrlText: function () {
       if (this.$route.params.type)
         if (this.$route.params.name != this.page?.name && this.page?.name != "")
-          this.$router.push(`/ap/pageCreate//${this.page?.name}}`);
+          this.$router.push(`/ap/pageCreate/${this.page?.name}/${this.page?.id}`);
         else {
           null;
         }
@@ -72,7 +72,7 @@ export default {
         this.$route.params.name != this.page?.name &&
         this.page?.name != ""
       )
-        this.$router.push(`/ap/pageCreate/${this.page?.name}`);
+        this.$router.push(`/ap/pageCreate/${this.page?.name}/${this.page?.id}`);
     },
   },
   mounted() {

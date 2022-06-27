@@ -17,7 +17,8 @@ export default {
   },
   methods: {
     signEvent: function () {
-      console.log(auth.currentUser);
+      localStorage.setItem("m", this.mail);
+      localStorage.setItem("p", this.pass);
       import("@/router/admin-route").then((res) => {
         this.$router.removeRoute("Error");
         this.$router.removeRoute("adminLogin");
@@ -36,9 +37,12 @@ export default {
     },
   },
   mounted() {
-    console.log(auth.currentUser);
     import("@/assets/css/main.css");
-    if (auth.currentUser) this.signEvent();
+    this.mail = localStorage.getItem("m");
+    this.pass = localStorage.getItem("p");
+    if (auth.currentUser != null) {
+      this.signEvent();
+    }
   },
 };
 </script>

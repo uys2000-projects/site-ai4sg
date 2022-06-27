@@ -12,7 +12,7 @@
         icon="description"
         :text="page?.name"
         :text2="page?.type"
-        :goTo="() => $router.push(`/ap/pageCreate/${page?.name}`)"
+        :goTo="() => $router.push(`/ap/pageCreate/${page?.name}/${page?.id}`)"
         @click="name = page.name"
       />
     </q-list>

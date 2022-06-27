@@ -1,12 +1,9 @@
 <template>
-  <h4>Developmant Data And Tables</h4>
-  <div v-for="item in items" :key="item">{{ item }}</div>
   <div class="q-pa-md" v-for="item in items" :key="item">
-    <q-expansion-item expand-separator :label="getTableName(item)">
+    <q-expansion-item expand-separator label="Variable Table">
       <q-table
         class="bg-gray"
         dark
-        :title="item[0]?.id"
         :columns="getCols(item)"
         :rows="item"
       />
