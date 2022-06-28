@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import pageCreate from "../components/pageCreate.vue";
+import pageCreate from "../../components/admin/pageCreate.vue";
 export default {
   props: ["pages"],
   components: {

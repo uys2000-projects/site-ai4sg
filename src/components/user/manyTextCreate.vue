@@ -44,8 +44,8 @@
 
 <script>
 import { getPages } from "@/services/service-fb";
-import listItem from "./listItem.vue";
-import listItemPages from "./listItemPages.vue";
+import listItem from "../admin/listItem.vue";
+import listItemPages from "../admin/listItemPages.vue";
 export default {
   props: ["pages"],
   inject: ["setPages"],

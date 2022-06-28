@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import listItemPages from "@/components/listItemPages.vue";
+import listItemPages from "@/components/admin/listItemPages.vue";
 export default {
   props: ["pages"],
   inject: ["updatePages"],

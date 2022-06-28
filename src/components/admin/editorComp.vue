@@ -4,9 +4,20 @@
       ref="quill"
       theme="snow"
       :modules="modules"
-      toolbar="full"
+      :toolbar="toolbar"
       @update:content="updateEvent"
-    />
+    >
+      <template #toolbar>
+        <div id="my-toolbar">
+          <q-btn
+            v-for="animation in animations"
+            :key="animation"
+            @click="addAnimation(animation.value)"
+            :label="animation.name"
+          />
+        </div>
+      </template>
+    </QuillEditor>
   </div>
 
   <q-btn
@@ -18,16 +29,14 @@
 </template>
 
 <script>
-import BlotFormatter from "quill-blot-formatter";
-import ImageUploader from "quill-image-uploader";
-import HtmlEditButton from "quill-html-edit-button";
-
 import { QuillEditor } from "@vueup/vue-quill";
+
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { getText, upladImage, uploadText } from "@/services/service-fb";
 import { computed } from "@vue/runtime-core";
-upladImage;
-
+import QuillToolBar from "@/Quill/QuillToolBar";
+import QuillModules from "@/Quill/QuillModules";
+QuillModules[1].options = (file) => upladImage(file);
 export default {
   components: {
     QuillEditor,
@@ -38,29 +47,9 @@ export default {
       di: false,
       route: computed(() => this.$route.path),
       upload: this.uploader,
-      modules: [
-        {
-          name: "htmlEditButton",
-          module: HtmlEditButton,
-          options: {
-            /* options */
-          },
-        },
-        {
-          name: "imageUploader",
-          module: ImageUploader,
-          options: {
-            upload: (file) => upladImage(file),
-          },
-        },
-        {
-          name: "blotFormatter",
-          module: BlotFormatter,
-          options: {
-            /* options */
-          },
-        },
-      ],
+      toolbar: QuillToolBar,
+      modules: QuillModules,
+      animations: [{ name: "Breath", value: "breath" }],
     };
   },
   methods: {
@@ -89,6 +78,14 @@ export default {
     publish: function () {
       this.di = true;
       uploadText(this.$refs.quill.getHTML()).then(() => (this.di = false));
+    },
+    addAnimation: function (value) {
+      let quill = this.$refs.quill.getQuill();
+      var range = quill.getSelection();
+      console.log(range);
+      if (range) {
+        quill.formatText(range, value);
+      }
     },
   },
 

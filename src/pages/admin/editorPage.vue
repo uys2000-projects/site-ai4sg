@@ -35,9 +35,9 @@
   </template>
 </template>
 <script>
-import pageEdit from "../components/pageEditComp.vue";
-import pageEditPlus from "../components/pageEditCompPlus.vue";
-import editorComp from "@/components/editorComp.vue";
+import pageEdit from "../../components/admin/pageEditComp.vue";
+import pageEditPlus from "../../components/admin/pageEditCompPlus.vue";
+import editorComp from "@/components/admin/editorComp.vue";
 import { getImage } from "@/services/service-fb";
 export default {
   props: ["pages"],

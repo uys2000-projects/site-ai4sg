@@ -1,5 +1,5 @@
 <template>
-  <div class="perspective effect-rotate-left">
+  <div v-show="show" class="perspective effect-rotate-left">
     <div class="container">
       <div class="outer-nav--return"></div>
       <div id="viewport" class="l-viewport">
@@ -17,10 +17,10 @@
 
 <script>
 import pagesLayout from "@/layouts/pagesLayout.vue";
-import headerBar from "@/components/headerBar.vue";
-import sideNav from "@/components/sideNav.vue";
-import popupNav from "@/components/popupNav.vue";
-import deviceNotification from "@/components/deviceNotification.vue";
+import headerBar from "@/components/user/headerBar.vue";
+import sideNav from "@/components/user/sideNav.vue";
+import popupNav from "@/components/user/popupNav.vue";
+import deviceNotification from "@/components/user/deviceNotification.vue";
 import { getPages } from "@/services/service-u";
 export default {
   components: { headerBar, sideNav, pagesLayout, popupNav, deviceNotification },
@@ -28,6 +28,7 @@ export default {
     return {
       pages: [],
       done: 0,
+      show: false,
     };
   },
   methods: {
@@ -44,12 +45,20 @@ export default {
     };
   },
   mounted() {
-    import("@/assets/css/main.css");
     this.setPages();
   },
   watch: {
     done() {
-      if (this.done >= 3) import("@/assets/js/functions-min");
+      // this about geting pages from database
+      if (this.done >= 3) {
+        import("@/assets/js/functions-min").then(() => {
+          import("@/assets/css/main.css").then(() => {
+            setTimeout(() => {
+              this.show = true;
+            }, 100);
+          });
+        });
+      }
     },
   },
 };

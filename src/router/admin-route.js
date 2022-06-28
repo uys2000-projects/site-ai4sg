@@ -6,22 +6,22 @@ export default {
     {
       path: "",
       name: "adminIndex",
-      component: () => import("@/pages/apIndexPage.vue"),
+      component: () => import("@/pages/admin/apIndexPage.vue"),
     },
     {
       path: "pageEdit/",
       name: "pages",
-      component: () => import("@/pages/editPage.vue"),
+      component: () => import("@/pages/admin/editPage.vue"),
       children: [
         {
           path: ":type/:name/:id",
           name: "editPage",
-          component: () => import("@/pages/editorPage.vue"),
+          component: () => import("@/pages/admin/editorPage.vue"),
           children: [
             {
               path: "ip/:iid",
               name: "editPage",
-              component: () => import("@/pages/editorPage.vue"),
+              component: () => import("@/pages/admin/editorPage.vue"),
             },
           ],
         },
@@ -30,19 +30,19 @@ export default {
     {
       path: "pageCreate/",
       name: "pageCreate",
-      component: () => import("@/pages/createPage.vue"),
+      component: () => import("@/pages/admin/createPage.vue"),
       children: [
         {
           path: ":name/:id",
           name: "pageEdit",
-          component: () => import("@/components/pageEditCompC.vue"),
+          component: () => import("@/components/admin/pageEditCompC.vue"),
         },
       ],
     },
     {
       path: "settings",
       name: "settings",
-      component: () => import("@/pages/apIndexPage.vue"),
+      component: () => import("@/pages/admin/apIndexPage.vue"),
     },
     {
       path: "/:pathMatch(.*)*",

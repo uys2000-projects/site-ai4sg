@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import pagesNav from "@/components/apPagesNav.vue";
-import loggerTab from "@/components/loggerTab.vue";
+import pagesNav from "@/components/admin/apPagesNav.vue";
+import loggerTab from "@/components/admin/loggerTab.vue";
 import {
   createInnerPage,
   createPage,

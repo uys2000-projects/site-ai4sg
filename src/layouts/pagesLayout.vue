@@ -16,10 +16,10 @@
 </template>
 <script>
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
-import onePage from "@/pages/oneTextPage.vue";
-import manyPage from "@/pages/manyTextPage.vue";
-import instaPage from "@/pages/instaPage.vue";
-import mediumPage from "@/pages/mediumPage.vue";
+import onePage from "@/pages/user/oneTextPage.vue";
+import manyPage from "@/pages/user/manyTextPage.vue";
+import instaPage from "@/pages/user/instaPage.vue";
+import mediumPage from "@/pages/user/mediumPage.vue";
 
 onePage;
 manyPage;

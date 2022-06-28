@@ -38,7 +38,7 @@
 
 <script>
 import listItemPages from "./listItemPages.vue";
-import pageEditComp from "@/components/pageEditComp.vue";
+import pageEditComp from "@/components/admin/pageEditComp.vue";
 import { getManyPages } from "@/services/service-fb";
 export default {
   props: ["pages"],

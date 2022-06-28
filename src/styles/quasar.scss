@@ -8,7 +8,11 @@
   justify-content: right;
   align-items: center;
 }
-
+@media (max-width: 1180px) {
+  .main-content {
+    justify-content: center;
+  }
+}
 .section {
   width: 90% !important;
   height: 85% !important;
@@ -35,4 +39,8 @@
   animation-duration: 1s;
 }
 
-
+.breath {
+  animation-name: breath;
+  animation-duration: 4s;  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+}

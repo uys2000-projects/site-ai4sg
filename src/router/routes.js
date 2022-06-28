@@ -17,7 +17,7 @@ export default [
   {
     path: "/ap",
     name: "adminLogin",
-    component: () => import("@/pages/loginPage.vue"),
+    component: () => import("@/pages/admin/loginPage.vue"),
   },
   {
     path: "/:pathMatch(.*)*",
