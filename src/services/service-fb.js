@@ -8,6 +8,8 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  orderBy,
+  query,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -28,10 +30,12 @@ const storage = getStorage();
 
 export const getPages = function () {
   const colRef = collection(db, "pages");
-  return getDocs(colRef);
+  const q = query(colRef, orderBy("timestamp"));
+  return getDocs(q);
 };
 const uploadPage = function (page) {
   const colRef = collection(db, "pages");
+  page.timestamp = new Date().getTime();
   return addDoc(colRef, page).then((res) => res.id);
 };
 const updatePage = function (id, page) {
@@ -52,10 +56,12 @@ export const removePage = function (id) {
 
 export const getManyPages = function (id) {
   const colRef = collection(db, id);
-  return getDocs(colRef);
+  const q = query(colRef, orderBy("timestamp"));
+  return getDocs(q);
 };
 const uploadInnerPage = function (outterId, page) {
   const colRef = collection(db, outterId);
+  page.timestamp = new Date().getTime()
   return addDoc(colRef, page).then((res) => res.id);
 };
 const updateInnerPage = function (outterId, id, page) {
@@ -73,9 +79,9 @@ export const removeInnerPage = function (outterId, innerId) {
   const docRef = doc(db, outterId, innerId);
   return deleteDoc(docRef);
 };
-export const updatePageType = function (id, pageType) {
+export const updatePageType = function (id, pageType, pageName) {
   const docRef = doc(db, "pages", id);
-  return updateDoc(docRef, { type: pageType });
+  return updateDoc(docRef, { type: pageType, name: pageName });
 };
 const getID = function () {
   const a = window.location.pathname.split("/");
@@ -95,14 +101,6 @@ export const upladImage = function (file) {
     );
   });
 };
-`return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/480px-JavaScript-logo.png"
-      );
-    }, 3500);
-    reject;
-  });`;
 
 export const getImage = function (url) {
   const storageRef = ref(storage, url);

@@ -48,7 +48,7 @@ export default {
   methods: {
     clikEvent: function () {
       this.di = true;
-      updatePageType(this.page?.id, this.page?.type).then(
+      updatePageType(this.page?.id, this.page?.type, this.page?.name).then(
         () => (this.di = false)
       );
     },
@@ -59,12 +59,16 @@ export default {
     updateUrlType: function () {
       if (this.$route.params.type)
         if (this.$route.params.type != this.page?.type)
-          this.$router.push(`/ap/pageCreate/${this.page?.name}/${this.page?.id}`);
+          this.$router.push(
+            `/ap/pageCreate/${this.page?.name}/${this.page?.id}`
+          );
     },
     updateUrlText: function () {
       if (this.$route.params.type)
         if (this.$route.params.name != this.page?.name && this.page?.name != "")
-          this.$router.push(`/ap/pageCreate/${this.page?.name}/${this.page?.id}`);
+          this.$router.push(
+            `/ap/pageCreate/${this.page?.name}/${this.page?.id}`
+          );
         else {
           null;
         }

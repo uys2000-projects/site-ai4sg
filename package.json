@@ -14,8 +14,9 @@
     "firebase": "9.8.1",
     "quasar": "^2.0.0",
     "quill-blot-formatter": "^1.0.5",
+    "quill-html-edit-button": "^2.2.12",
     "quill-image-uploader": "^1.2.2",
-    "vue": "^3.2.13",
+    "vue": "^3.2.37",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {

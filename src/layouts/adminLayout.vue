@@ -135,6 +135,16 @@ export default {
 * {
   color: white;
 }
+::-moz-selection {
+  /* Code for Firefox */
+  color: black;
+  background: white;
+}
+
+::selection {
+  color: black;
+  background: white;
+}
 .ql-picker-item {
   color: black !important;
 }
@@ -173,5 +183,8 @@ export default {
     width: 90%;
     max-width: 300px;
   }
+}
+.ql-editor {
+  background-color: #000;
 }
 </style>

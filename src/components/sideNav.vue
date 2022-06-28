@@ -2,11 +2,11 @@
   <nav class="l-side-nav">
     <ul class="side-nav">
       <li class="is-active">
-        <span>{{ f }}</span>
+        <span>{{ f.name }}</span>
       </li>
 
       <li v-for="page in menu" :key="page">
-        <span>{{ page }}</span>
+        <span>{{ page.name }}</span>
       </li>
     </ul>
   </nav>
@@ -14,17 +14,22 @@
 
 <script>
 export default {
-  inject: ["getPages"],
+  props: ["pages"],
+  inject:["incDone"],
   data() {
     return {
       f: " ",
       menu: [],
     };
   },
-  mounted() {
-    const pages = [...this.getPages];
-    this.f = pages[0];
-    this.menu = pages.splice(1, pages.length - 1);
+  mounted() {},
+  watch: {
+    pages() {
+      const pages = [...this.pages];
+      this.f = pages[0];
+      this.menu = pages.splice(1, pages.length - 1);
+      this.incDone()
+    },
   },
 };
 </script>

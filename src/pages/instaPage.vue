@@ -1,5 +1,4 @@
 <template>
-  <div class="page">
     <q-carousel
       v-model="page.num"
       transition-prev="slide-right"
@@ -65,7 +64,6 @@
         </q-card-section>
       </q-card>
     </q-dialog>
-  </div>
 </template>
 
 <script>

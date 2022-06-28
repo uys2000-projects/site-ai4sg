@@ -60,7 +60,7 @@ export default {
       if (a) {
         const b = innerPages[a["index"]];
         return b;
-      } else return "asd";
+      } else return "";
     },
   },
   methods: {

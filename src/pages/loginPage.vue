@@ -1,5 +1,5 @@
 <template>
-  <q-form action="https://some-url.com" method="post" class="text-white">
+  <q-form class="text-white">
     <q-input dark v-model="mail" label="E-Mail" />
     <q-input dark v-model="pass" label="Pass" />
     <q-btn label="login" style="width: 100vw" @click="login" />

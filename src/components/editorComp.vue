@@ -20,10 +20,10 @@
 <script>
 import BlotFormatter from "quill-blot-formatter";
 import ImageUploader from "quill-image-uploader";
+import HtmlEditButton from "quill-html-edit-button";
 
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
-import "@vueup/vue-quill/dist/vue-quill.bubble.css";
 import { getText, upladImage, uploadText } from "@/services/service-fb";
 import { computed } from "@vue/runtime-core";
 upladImage;
@@ -39,6 +39,13 @@ export default {
       route: computed(() => this.$route.path),
       upload: this.uploader,
       modules: [
+        {
+          name: "htmlEditButton",
+          module: HtmlEditButton,
+          options: {
+            /* options */
+          },
+        },
         {
           name: "imageUploader",
           module: ImageUploader,

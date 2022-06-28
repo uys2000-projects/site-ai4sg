@@ -1,35 +1,52 @@
 <template>
-  <ul class="l-main-content main-content">
-    <li class="l-section section section--is-active">
-      <home-page />
+  <ul class="l-main-content main-content ql-snow">
+    <li class="l-section section ql-editor section--is-active ">
+        <one-page v-if="f?.type == 'OneText'" :inf="f" />
+        <many-page v-if="f?.type == 'ManyPage'" :inf="f" />
+        <insta-page v-if="f?.type == 'InstaPage'" :inf="f" />
+        <medium-page v-if="f?.type == 'MediumPage'" :inf="f" />
     </li>
-    <li class="l-section section">
-      <about-page />
-    </li>
-    <li class="l-section section">
-      <events-page />
-    </li>
-    <li class="l-section section">
-      <blogs-page />
-    </li>
-    <li class="l-section section">
-      <contact-page />
+    <li class="l-section section ql-editor"  v-for="page in menu" :key="page">
+        <one-page v-if="page?.type == 'OneText'" :inf="page" />
+        <many-page v-if="page?.type == 'ManyText'" :inf="page" />
+        <insta-page v-if="page?.type == 'InstaPage'" :inf="page" />
+        <medium-page v-if="page?.type == 'MediumPage'" :inf="page" />
     </li>
   </ul>
 </template>
 <script>
-import homePage from "@/pages/homePage.vue";
-import eventsPage from "@/pages/eventsPage.vue";
-import blogsPage from "@/pages/blogsPage.vue";
-import aboutPage from "@/pages/aboutPage.vue";
-import contactPage from "@/pages/contactPage.vue";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import onePage from "@/pages/oneTextPage.vue";
+import manyPage from "@/pages/manyTextPage.vue";
+import instaPage from "@/pages/instaPage.vue";
+import mediumPage from "@/pages/mediumPage.vue";
+
+onePage;
+manyPage;
+instaPage;
+mediumPage;
 export default {
+  props: ["pages"],
+  inject: ["incDone"],
   components: {
-    homePage,
-    eventsPage,
-    aboutPage,
-    blogsPage,
-    contactPage,
+    onePage,
+    manyPage,
+    instaPage,
+    mediumPage,
+  },
+  data() {
+    return {
+      f: {},
+      menu: [],
+    };
+  },
+  watch: {
+    pages() {
+      const pages = [...this.pages];
+      this.f = pages[0];
+      this.menu = pages.splice(1, pages.length - 1);
+      this.incDone();
+    },
   },
 };
 </script>

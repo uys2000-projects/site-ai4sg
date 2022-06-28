@@ -584,6 +584,15 @@ body {
 .side-nav li:nth-child(5)::before {
   content: "05";
 }
+.side-nav li:nth-child(6)::before {
+  content: "06";
+}
+.side-nav li:nth-child(7)::before {
+  content: "07";
+}
+.side-nav li:nth-child(8)::before {
+  content: "08";
+}
 .side-nav li.is-active {
   color: #0f33ff;
   -webkit-transition: color 0.4s ease-in-out;
@@ -1618,4 +1627,16 @@ body {
 .outer-nav li.is-vis:nth-child(5) {
   -webkit-transition-delay: 0.16s;
   transition-delay: 0.16s;
+}
+.outer-nav li.is-vis:nth-child(6) {
+  -webkit-transition-delay: 0.2s;
+  transition-delay: 0.2s;
+}
+.outer-nav li.is-vis:nth-child(7) {
+  -webkit-transition-delay: 0.24s;
+  transition-delay: 0.24s;
+}
+.outer-nav li.is-vis:nth-child(8) {
+  -webkit-transition-delay: 0.28s;
+  transition-delay: 0.28s;
 }

@@ -6,9 +6,9 @@
     <div class="p b">
       <page-edit :pages="pages" />
     </div>
-    <div class="p s">
+    <div class="p s ql-snow">
       <h1 style="margin: 0px; border-bottom:1px solid; black">ShowRoom</h1>
-      <div v-html="test" ref="showRoom"></div>
+      <div class="ql-editor" v-html="test" ref="showRoom"></div>
     </div>
   </template>
   <template v-if="type == 'ManyText'">
@@ -18,9 +18,9 @@
     <div class="p b">
       <page-edit-plus :pages="pages" />
     </div>
-    <div class="p s">
+    <div class="p s ql-snow">
       <h1 style="margin: 0px; border-bottom:1px solid; black">ShowRoom</h1>
-      <div v-html="test" ref="showRoom"></div>
+      <div class="ql-editor" v-html="test" ref="showRoom"></div>
     </div>
   </template>
   <template v-if="type == 'InstaPosts'">

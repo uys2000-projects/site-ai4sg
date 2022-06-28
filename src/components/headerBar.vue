@@ -3,7 +3,6 @@
     <a class="header--logo" href="#0">
       <img :src="require('@/assets/logo.png')" alt="AI4SG" />
     </a>
-
     <div class="header--nav-toggle">
     </div>
   </header>
