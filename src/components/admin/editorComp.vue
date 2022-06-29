@@ -7,16 +7,7 @@
       :toolbar="toolbar"
       @update:content="updateEvent"
     >
-      <template #toolbar>
-        <div id="my-toolbar">
-          <q-btn
-            v-for="animation in animations"
-            :key="animation"
-            @click="addAnimation(animation.value)"
-            :label="animation.name"
-          />
-        </div>
-      </template>
+
     </QuillEditor>
   </div>
 
@@ -81,17 +72,6 @@ export default {
     publish: function () {
       this.di = true;
       uploadText(this.$refs.quill.getHTML()).then(() => (this.di = false));
-    },
-    addAnimation: function (value) {
-      value;
-      let quill = this.$refs.quill.getQuill();
-      var range = quill.getSelection();
-      if (range) {
-        console.log("range is valid");
-        quill.formatText(range, "b");
-      } else {
-        console.log("it it invalid");
-      }
     },
   },
 
