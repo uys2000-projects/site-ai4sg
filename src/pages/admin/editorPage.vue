@@ -23,16 +23,6 @@
       <div class="ql-editor" v-html="test" ref="showRoom"></div>
     </div>
   </template>
-  <template v-if="type == 'InstaPosts'">
-    <div class="p s">
-      <page-edit :pages="pages" />
-    </div>
-  </template>
-  <template v-if="type == 'MediumPosts'">
-    <div class="p s">
-      <page-edit :pages="pages" />
-    </div>
-  </template>
 </template>
 <script>
 import pageEdit from "../../components/admin/pageEditComp.vue";

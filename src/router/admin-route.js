@@ -40,11 +40,6 @@ export default {
       ],
     },
     {
-      path: "settings",
-      name: "settings",
-      component: () => import("@/pages/admin/apIndexPage.vue"),
-    },
-    {
       path: "/:pathMatch(.*)*",
       name: "Error",
       component: () => import("@/layouts/redirectLayout.vue"),

@@ -30,13 +30,16 @@
 
 <script>
 import { QuillEditor } from "@vueup/vue-quill";
-
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+
 import { getText, upladImage, uploadText } from "@/services/service-fb";
 import { computed } from "@vue/runtime-core";
+
 import QuillToolBar from "@/Quill/QuillToolBar";
 import QuillModules from "@/Quill/QuillModules";
+
 QuillModules[1].options = (file) => upladImage(file);
+
 export default {
   components: {
     QuillEditor,
@@ -80,11 +83,14 @@ export default {
       uploadText(this.$refs.quill.getHTML()).then(() => (this.di = false));
     },
     addAnimation: function (value) {
+      value;
       let quill = this.$refs.quill.getQuill();
       var range = quill.getSelection();
-      console.log(range);
       if (range) {
-        quill.formatText(range, value);
+        console.log("range is valid");
+        quill.formatText(range, "b");
+      } else {
+        console.log("it it invalid");
       }
     },
   },

@@ -1,9 +1,14 @@
 <template>
-  <q-form class="text-white">
-    <q-input dark v-model="mail" label="E-Mail" />
-    <q-input dark v-model="pass" label="Pass" />
-    <q-btn label="login" style="width: 100vw" @click="login" />
-  </q-form>
+  <div class="l">
+    <img :src="require('@/assets/dişi_yatay_uzun.png')" alt="" />
+    <div>
+      <q-form class="text-white fadein" @submit="login">
+        <q-input dark v-model="mail" label="E-Mail" />
+        <q-input dark v-model="pass" label="Pass" />
+        <q-btn flat label="login" class="full-width text-white" type="submit" @click="login" />
+      </q-form>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -46,3 +51,23 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+img {
+  width: 100%;
+}
+.l {
+  position: fixed;
+  width: 100%;
+  max-width: 500px;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0px;
+}
+.l > div {
+  background-color: #111;
+  padding: 10px;
+  border-radius: 10px;
+}
+</style>

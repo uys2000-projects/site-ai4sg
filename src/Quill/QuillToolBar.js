@@ -15,4 +15,5 @@ export default [
   [{ align: [] }],
   ["link", "video", "image"],
   ["clean"], // remove formatting button
+  ["pulse"]
 ];

@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "./config";
+import { getAnalytics, logEvent } from "firebase/analytics";
+
 import {
   collection,
   doc,
@@ -15,6 +17,9 @@ import {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage();
+const analytics = getAnalytics(app);
+logEvent(analytics, 'notification_received');
+
 db
 storage
 

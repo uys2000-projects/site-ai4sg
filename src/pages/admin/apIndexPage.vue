@@ -1,5 +1,11 @@
 <template>
-  <div class="p s">Admin Panel</div>
+  <iframe
+    class="p s"
+    loading="lazy"
+    src="https://mehmetuysal.tech"
+    title="Creator"
+    style="border: none; overflow: hidden"
+  ></iframe>
 </template>
 
 <script></script>

@@ -41,6 +41,19 @@
 
 .breath {
   animation-name: breath;
-  animation-duration: 4s;  animation-iteration-count: infinite;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+}
+img {
+  animation-name: fadein;
+  animation-duration: 8s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease;
+}
+.fadein {
+  animation-name: fadein;
+  animation-duration: 6s;
+  animation-iteration-count: 1;
   animation-timing-function: ease;
 }

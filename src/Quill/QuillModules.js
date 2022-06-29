@@ -1,15 +1,10 @@
 import BlotFormatter from "quill-blot-formatter";
 import ImageUploader from "quill-image-uploader";
 import HtmlEditButton from "quill-html-edit-button";
-import AnimationBlock from "./QuillAnimation"
 export default [
   {
     name: "htmlEditButton",
     module: HtmlEditButton,
-  },
-  {
-    name: "animationBlock",
-    module: AnimationBlock,
   },
   {
     name: "imageUploader",

@@ -1,10 +1,6 @@
 <template>
   <q-list dark class="rounded-borders text-left">
-    <list-item
-      icon="home"
-      text="Admin Panel"
-      :goTo="() => $router.push('/ap')"
-    />
+    <list-item icon="home" text="Land Page" :goTo="() => $router.push('/ap')" />
 
     <q-expansion-item
       expand-separator
@@ -34,15 +30,10 @@
       :goTo="() => $router.push('/ap/pageCreate')"
     />
     <list-item
-      icon="settings"
-      text="Settings"
-      :goTo="() => $router.push('/ap/settings')"
-    />
-    <list-item
       icon="logout"
       text="Exit"
       iconRight="chevron_left"
-      :goTo="() => $router.push('/exit')"
+      :goTo="signOut"
     />
   </q-list>
 </template>
@@ -51,6 +42,8 @@
 import { getPages } from "@/services/service-fb";
 import listItem from "./listItem.vue";
 import listItemPages from "./listItemPages.vue";
+import { exit } from "@/services/login-service";
+
 export default {
   props: ["pages"],
   inject: ["setPages"],
@@ -60,6 +53,12 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    signOut: function () {
+      exit();
+      this.$router.push("/exit");
+    },
   },
   mounted() {
     getPages().then((res) => {

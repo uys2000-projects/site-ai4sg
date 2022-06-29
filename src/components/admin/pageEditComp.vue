@@ -29,8 +29,6 @@ export default {
       options: [
         { label: "OneText", value: "OneText" },
         { label: "ManyText", value: "ManyText" },
-        { label: "InstaPosts", value: "InstaPosts" },
-        { label: "MediumPosts", value: "MediumPosts" },
       ],
     };
   },
