@@ -4,7 +4,7 @@
     <div>
       <q-form class="text-white fadein" @submit="login">
         <q-input dark v-model="mail" label="E-Mail" />
-        <q-input dark v-model="pass" label="Pass" />
+        <q-input dark v-model="pass" type="password" label="Pass" />
         <q-btn flat label="login" class="full-width text-white" type="submit" @click="login" />
       </q-form>
     </div>
