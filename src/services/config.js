@@ -1,9 +1,9 @@
 export default {
-  apiKey: "AIzaSyCXr5cTLOENWsRQdP5FeRudJIrzV73ufvs",
-  authDomain: "ai4sg-site.firebaseapp.com",
-  projectId: "ai4sg-site",
-  storageBucket: "ai4sg-site.appspot.com",
-  messagingSenderId: "971270508941",
-  appId: "1:971270508941:web:2f51b490be2cd066516dc4",
-  measurementId: "G-23QJV29K7B"
+  apiKey: "AIzaSyBIeENAMOxIA2QzYesb07BnX7n4EjJCYiU",
+  authDomain: "ai4sg-test2.firebaseapp.com",
+  projectId: "ai4sg-test2",
+  storageBucket: "ai4sg-test2.appspot.com",
+  messagingSenderId: "806629047089",
+  appId: "1:806629047089:web:e749d2518a21baaebb4e10",
+  measurementId: "G-NGMY877927"
 };
